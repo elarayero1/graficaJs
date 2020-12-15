@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Bar Chart Multi Axis</title>
+	<script src="Chart.js"></script>
+	<script src="utils.js"></script>
+	<style>
+	canvas {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+	</style>
+</head>
+
+<body>
+	<div style="display: block; width: 524px; height: 314px;">
+		<canvas id="canvas"></canvas>
+	</div>
+	
+	<script>
+	
+	function formatLabel(str, maxwidth){
+    var sections = [];
+    var words = str.split(" ");
+    var temp = "";
+
+    words.forEach(function(item, index){
+        if(temp.length > 0)
+        {
+            var concat = temp + ' ' + item;
+
+            if(concat.length > maxwidth){
+                sections.push(temp);
+                temp = "";
+            }
+            else{
+                if(index == (words.length-1))
+                {
+                    sections.push(concat);
+                    return;
+                }
+                else{
+                    temp = concat;
+                    return;
+                }
+            }
+        }
+
+        if(index == (words.length-1))
+        {
+            sections.push(item);
+            return;
+        }
+
+        if(item.length < maxwidth) {
+            temp = item;
+        }
+        else {
+            sections.push(item);
+        }
+
+    });
+
+    return sections;
+}
+	
+		var barChartData = {
+			labels: ['CONOCIMIENTO DE LA INDUSTRIA Y EL MERCADO','February', 'March', 'April', 'May', 'June', 'July'],
+			datasets: [
+		 {
+		    label: 'IDEAL',
+		    backgroundColor: 'rgba(87, 255, 98, 0.4)',
+		    borderColor: "rgba(179,181,198,1)",
+		    pointBackgroundColor: "rgba(179,181,198,1)",
+		    pointBorderColor: "#fff",
+		    pointHoverBackgroundColor: "#fff",
+		    pointHoverBorderColor: "rgba(179,181,198,1)",
+			fill: false,
+		    //data: dataCompetenciasIdeal
+		    data: [5,5,5,5,5]
+		 },              
+	     {
+	        label: 'empleado 1',
+	         backgroundColor: 'rgba(255, 206, 86, 0.4)',
+	         borderColor: "rgba(179,181,198,1)",
+	         pointBackgroundColor: "rgba(179,181,198,1)",
+	         pointBorderColor: "#fff",
+	         pointHoverBackgroundColor: "#fff",
+	         pointHoverBorderColor: "rgba(179,181,198,1)",
+			 fill: false,
+	         //data: dataCompetencias
+	         data: [0,5,3,2.5,2.5]
+	     },
+	     {
+	         label: 'empleado 2',
+	         backgroundColor: "rgba(87,149,255,0.4)",
+	         borderColor: "rgba(54, 162, 235, 0.2)",
+	         pointBackgroundColor: "rgba(255,99,132,1)",
+	         pointBorderColor: "#fff",
+	         pointHoverBackgroundColor: "#fff",
+	         pointHoverBorderColor: "rgba(255,99,132,1)",
+			 fill: false,
+	         //data: dataCompetencias2
+	         data: [3,2.5,3,5,0]
+	     }
+	 ]
+
+		};
+	
+		window.onload = function() {
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myBar = new Chart(ctx, {
+             type: 'bar',
+             data: barChartData,                             		
+				options: {
+                 // Elements options apply to all of the options unless overridden in a dataset
+                 // In this case, we are setting the border of each bar to be 2px wide and green
+                 elements: {
+                     rectangle: {
+                         borderWidth: 2,
+                         borderColor: '#354181',
+                         borderSkipped: 'bottom'
+                     }
+				         },
+                 responsive: true,
+                 legend: {
+                     position: 'top',
+                 },
+				title: {
+                     display: true,
+                     text: 'Competencias del Empleado'
+				        },
+						   
+				scales: {
+						yAxes: [{
+							ticks: {
+							    //beginAtZero:true,
+								//max: 10,
+								max :10,
+								min: 0,
+								stepSize: 1,
+								stacked: false,
+								scaleBeginAtZero : true,
+							}
+							}],
+								xAxes: [{    // funciona pero recorta 
+								display: true,
+								position: 'bottom',
+								ticks: {
+								  autoSkip: false,
+								  maxRotation: 0,
+								  minRotation: 90,
+								  scaleBeginAtZero : true,
+								  //padding: 20,
+								  //autoSkipPadding:100
+								//  padding:5,
+								//  barPercentage: 1,
+								  
+								} 
+						}]
+				}
+					}
+             });
+         }
+		toUpperCase()
+		//alert("Total number of words: " + prompt("Please enter your name and surname:").split(" ").length);
+
+	</script>
+</body>
+
+</html>
